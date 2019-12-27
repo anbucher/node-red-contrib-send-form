@@ -7,7 +7,7 @@ const fileType = require('file-type');
 // require in libs
 
 var fileData = ""; // initializing file
-var debug = false; 
+var debug = true; 
 
 module.exports = function (RED) {
 
@@ -145,10 +145,8 @@ module.exports = function (RED) {
 //formData.append('caption', 'photo251');
 //formData.append('photo',    buffer, {'contentType': 'image/png', 'filename': 'nb-3x256.png'});
 				
-				
-//				formData.submit('https://api.telegram.org/bot<BOT_ID>/sendPhoto',
 				formData.submit(url,
-					function (err, res) { // StarBot
+					function (err, res) {
 
 					if (err || !res) {
 						// node.error(RED._("httpSendMultipart.errors.no-url"), msg);
@@ -163,24 +161,56 @@ module.exports = function (RED) {
 							shape: "ring",
 							text: statusText
 						});
+					// success
 					} else {
 						res.resume();
-						msg.payload = res;
-						node.send(msg);
-						if(debug) console.log("msg.statusCode "+msg.payload.statusCode);
 
-						if(msg.payload.statusCode !== 200){
-							if(debug) console.log("msg.statusCode "+msg.payload.statusCode);
-							node.status({
-								fill: "red",
-								shape: "ring",
-								text: (RED._("node-red-contrib-send-form.errors.error-status-code") + " ["+msg.payload.statusCode+"]")
-							});
-						} else {
-							if(debug) console.log("msg.statusCode "+msg.payload.statusCode);
-							node.status({
-							});
-						}
+						// ambucher: added correction to get body of response object
+						let body = []
+						res.on('data', (chunk) => {
+							if(debug) console.log(`BODY: ${chunk}`);
+							body.push(chunk)
+						  });
+
+						  res.on('end', () => {
+							if(debug) console.log('No more data in response.');
+
+							if(debug) console.log("msg.statusCode "+res.statusCode);
+
+							if(res.statusCode !== 200){
+								if(debug) console.log("msg.statusCode "+res.statusCode);
+								node.status({
+									fill: "red",
+									shape: "ring",
+									text: (RED._("node-red-contrib-send-form.errors.error-status-code") + " ["+res.statusCode+"]")
+								});
+							} else {
+								if(debug) console.log("msg.statusCode "+res.statusCode);
+								node.status({
+								});
+							}
+
+							body = Buffer.concat(body)
+
+							switch(n.ret) {
+								case 'bin': {
+									msg.payload = body
+									break
+								}
+								case 'obj': {
+									msg.payload = {
+										headers: res.headers,
+										body: body,
+									}
+									break
+								}
+								default: {
+									msg.payload = body.toString()
+								}
+							}
+
+							node.send(msg);
+						  });  						
 					}
 				});
 			} //else
