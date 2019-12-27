@@ -1,6 +1,6 @@
 {
-	"description": "NodeRed node for posting multipart form data to external sites",
-	"homepage": "https: //github.com/dmvstar/node-red-contrib-send-form#readme",
+	"description": "NodeRed node for posting multipart/form-data to http server",
+	"homepage": "https://github.com/anbucher/node-red-contrib-send-form#readme",
 	"author": [
 		{
 			"name": "StarDust",
@@ -11,10 +11,15 @@
 			"name": "Chebotarov",
 			"email": "swiftshade@gmail.com",
 			"url": "https://github.com/ArcanePhysics"
-		}
+		},
+		{
+			"name": "ambucher",
+			"email": "npm@ambucher.com",
+			"url": "https://github.com/anbucher"
+		},		
 	],
 	"bugs": {
-		"url": "https://github.com/dmvstar/node-red-contrib-send-form/issues"
+		"url": "https://github.com/anbucher/node-red-contrib-send-form/issues"
 	},
 	"dependencies": {
 		"file-type": ">=12.4.0",
@@ -26,7 +31,8 @@
 	"keywords": [
 		"node-red",
 		"multipart",
-		"formdata"
+		"form-data",
+		"http"
 	],
 	"license": "MIT",
 	"name": "node-red-contrib-send-form",
@@ -37,8 +43,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/dmvstar/node-red-contrib-send-form.git"
+		"url": "git+https://github.com/anbucher/node-red-contrib-send-form.git"
 	},
 	"scripts": {},
-	"version": "0.3.19"
+	"version": "0.3.20"
 }
