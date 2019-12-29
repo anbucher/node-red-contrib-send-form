@@ -7,7 +7,7 @@ const fileType = require('file-type');
 // require in libs
 
 var fileData = ""; // initializing file
-var debug = true; 
+var debug = false; 
 
 module.exports = function (RED) {
 
@@ -44,14 +44,14 @@ module.exports = function (RED) {
 				}
 			}
 
-			if (!msg.payload.fileData) {
+			if (!msg.payload.file.data) {
 				// throw an error if no file
 				node.warn(RED._("Error: no file found to send."));
 				msg.error = "File was not defined";
 				msg.statusCode = 400;
 				node.send(msg); // TODO: make sure this escapes entirely; need better error-handling here
 			} else {
-				fileData = msg.payload.fileData;
+				fileData = msg.payload.file.data;
 			}
 				node.status({
 					fill: "blue",
@@ -87,15 +87,35 @@ module.exports = function (RED) {
 				var formData = new FormData();
 				var buffer, fileName = 'default', fileMime = 'unknown', fileDataType;
 				
-				if(msg.payload.fileName !== undefined) {
-					fileName = msg.payload.fileName;
+				/*
+				// Payload Format
+				msg.payload = {
+					file: {
+						field: 'file',
+						data: msg.payload,
+						type: 'binary',
+						name: 'test'
+					},
+					formOptions: {
+						params: '',
+					}
+				}
+
+
+				*/
+
+
+
+				if(msg.payload.file.name !== undefined) {
+					fileName = msg.payload.file.name;
 				}	
 				
 				fileDataType = n.filetype;
-				if(msg.payload.fileDataType !== undefined) {
-					fileDataType = msg.payload.fileDataType;
-				} 
+				if(msg.payload.file.type !== undefined) {
+					fileDataType = msg.payload.file.type;
+				}
 				if(debug) console.log("fileDataType: "+fileDataType);
+
 				if (fileDataType !== 'base64' && fileDataType !== 'binary'){
 					node.error(RED._("node-red-contrib-send-form .errors.no-file-data-type") + " ["+fileDataType+"]", msg); //   
 					node.status({
@@ -106,14 +126,14 @@ module.exports = function (RED) {
 					return;
 				}	
 				
-				if(debug) console.log("msg.payload.fileData " +msg.payload.fileData.length);
+				if(debug) console.log("msg.payload.file.data " +msg.payload.file.data.length);
 			
-				if(msg.payload.fileData !== undefined) {
+				if(msg.payload.file.data !== undefined) {
 				{
 					if (fileDataType === 'base64')
-						buffer = Buffer.from(msg.payload.fileData, 'base64');
+						buffer = Buffer.from(msg.payload.file.data, 'base64');
 					else
-						buffer = msg.payload.fileData;
+						buffer = msg.payload.file.data;
 				}
 				
 				var fileTypeInfo = fileType(buffer);
@@ -130,8 +150,8 @@ module.exports = function (RED) {
 					}
 				}
 
-				var formFileField = msg.payload.formFileField;
-				if(debug) console.log(formFileField + " "+msg.payload.fileData.length+" "+buffer.length);
+				var formFileField = msg.payload.file.field;
+				if(debug) console.log(formFileField + " "+msg.payload.file.data.length+" "+buffer.length);
 				if(debug) console.log('contentType '+ fileMime + ' filename '+ fileName);
 
 
@@ -152,7 +172,7 @@ module.exports = function (RED) {
 						// node.error(RED._("httpSendMultipart.errors.no-url"), msg);
 						var statusText = "Unexpected error";
 						if (err) {
-							statusText = err;
+							statusText = err.message;
 						} else if (!resp) {
 							statusText = "No response object";
 						}
@@ -165,7 +185,7 @@ module.exports = function (RED) {
 					} else {
 						res.resume();
 
-						// ambucher: added correction to get body of response object
+						// get body of response object
 						let body = []
 						res.on('data', (chunk) => {
 							if(debug) console.log(`BODY: ${chunk}`);
@@ -199,8 +219,9 @@ module.exports = function (RED) {
 								}
 								case 'obj': {
 									msg.payload = {
-										headers: res.headers,
 										body: body,
+										headers: res.headers,
+										statusCode: res.statusCode
 									}
 									break
 								}
