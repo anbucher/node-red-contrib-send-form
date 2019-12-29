@@ -22,7 +22,7 @@ it is possible to pass the buffer into the node as part of the msg:
       field: 'file',
       data: msg.payload,
       type: 'binary',
-      name: 'test'
+      name: 'file'
     },
     formOptions: {
       params: '',
