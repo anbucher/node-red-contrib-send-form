@@ -149,8 +149,8 @@
 	<div class="form-row">
 		<label for="node-input-ret"><i class="fa fa-arrow-left"></i><span> Return</span></label>
 		<select type="text" id="node-input-ret" style="width:70%;">
-        <option selected value="txt">UTF-8 string</option>
-        <option value="bin">Binary</option>
+        <option selected value="txt">a String</option>
+        <option value="bin">a Buffer</option>
         <option value="obj">a parsed JSON object</option>
         </select>
 	</div>
@@ -160,22 +160,51 @@
 <script type="text/x-red" data-help-name="http-send-multipart-form">
 	<p>Provides a node for posting multipart form-data.</p>
 	<p>The URL must be configured in the node.</p>
-	<ul>
-		<li><code>url</code>, if set, is used as the url of the request. Must start with http: or https:</li>
-		<li><code>headers</code>, if set, should be an object containing field/value pairs to be added as request headers</li>
-		<li><code>payload</code> is sent as the body of the request</li>
-    <li><code>filepath</code>, if set, will load the file from the given path, relative to the location of the NodeRed project.  If left blank, the node will look for the file in the root directory of the NodeRed project.</li>
-	</ul>
-	<p>When configured within the node, the URL property can contain <a href="http://mustache.github.io/mustache.5.html" target="_new">mustache-style</a> tags. These allow the url to be constructed using values of the incoming message. For example, if the url
-		is set to
-		<code>example.com/{{{topic}}}</code>, it will have the value of <code>msg.topic</code> automatically inserted. Using {{{...}}} prevents mustache from escaping characters like / & etc.</p>
-	<p>
-		The output message contains the following properties:
+	<h3>Inputs</h3>
+		<code>payload</code> contains all form data properties:
 		<ul>
-			<li><code>payload</code> is the body of the response</li>
-			<li><code>statusCode</code> is the status code of the response, or the error code if the request could not be completed</li>
-			<li><code>headers</code> is an object containing the response headers</li>
+			<li>
+				<code>file</code>
+				<ul>
+					<li><code>field</code></li>
+					<li><code>data</code></li>
+					<li><code>type</code></li>
+					<li><code>name</code></li>
+				</ul>
+			</li>
+			<li>
+				<code>formOptions</code>
+				<ul>
+					<li><code>&lt;name1&gt; : &lt;value&gt;</code></li>
+					<li><code>&lt;name2&gt; : &lt;value&gt;</code></li>
+				</ul>				
+			</li>
 		</ul>
+	<h3>Outputs</h3>
+	<dl class="message-properties">
+
+		<dt>payload
+			<span class="property-type">string | buffer | object</span>
+		</dt>
+		<dd> the payload of the message</dd>
+
+		<dt class="optional">payload.body
+			<span class="property-type">string</span>
+		</dt>
+		<dd>response body</dd>
+		<dt class="optional">payload.headers
+			<span class="property-type">object</span>
+		</dt>
+		<dd>response headers</dd>
+
+		<dt class="optional">payload.statusCode
+			<span class="property-type">integer</span>
+		</dt>
+		<dd>status code of response</dd>
+	</dl>
+	
+	<h3>Details</h3>
+
 </script>
 
 
