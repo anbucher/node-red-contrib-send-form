@@ -9,13 +9,43 @@ Pulled together using some of the best of parts of other node-red-contrib nodes 
 Currently only sends files. However, there are future plans to handle other types multipart/form-data.
 
 ## Usage
-Required inputs:
+Required node inputs:
 * url (this is specified on the node) 
 * file source type:
   - base64 or binary buffer
 
-it is possible to pass the buffer into the node as part of the msg:
-  
+### File
+
+* **Data**  | *Buffer*   
+Needs to be passed in  ``` msg.payload.file.data```
+* **Name of file field** | *String*    
+Needs to be passed in  ``` msg.payload.file.field```
+
+* **Name of file** | *String*   
+Needs to be passed in  ``` msg.payload.file.name```
+
+* **Source type** | *String*   
+Can be selected within the node from a dropdown menu "type" or passed in ``` msg.payload.file.type```. Payload overrides the dropdown menu.
+
+   Currently accepts  
+   - base64
+   - binary
+
+### Form fields
+
+Can be inserted within the node or passed as part of ```msg.payload.formOptions.<name of key>```
+
+```javascript
+msg.payload.formOptions.params = 'test':
+```
+is the same as
+
+```html
+<input type=textbox name=params value="test">
+```
+
+### Example ```msg.payload```
+ 
   ```javascript
   msg.payload = {
     file: {
@@ -29,7 +59,7 @@ it is possible to pass the buffer into the node as part of the msg:
     }
   }
 ```
-will be the same as:
+same as:
 
 ```html
   <form method=post enctype=multipart/form-data>
@@ -38,23 +68,8 @@ will be the same as:
   </form>
 ```
 
-**Source type**
-
-Can be selected within the node from a dropdown menu "type" or passed in "msg.payload.file.type". Payload overrides the dropdown menu.
-
-Currently accepts  
-- Base64
-- Binary
-
-**Form Fields** as part of payload, will be added to form
-```html
-<input type=textbox name=params value="test">
-```
-
-becoms
-  ```javascript
-msg.payload.formOptions.params = 'test':
-```
+## Example flow
+Check Node-RED Menu Import -> Examples for available examples 
 
 ## Why this module?
 As of december 2019, NodeRed does not yet support sending multipart form-data. This module aims to begin to close that gap.
