@@ -1,6 +1,6 @@
 {
 	"name": "@ambucher/node-red-contrib-send-form",
-	"version": "0.3.21",
+	"version": "0.3.22",
 	"description": "NodeRed node for posting multipart/form-data to http server",
 	"main": "http-send-multipart-form.js",
 	"homepage": "https://github.com/anbucher/node-red-contrib-send-form#readme",
