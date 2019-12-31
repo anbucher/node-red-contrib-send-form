@@ -1,26 +1,15 @@
 {
 	"name": "@ambucher/node-red-contrib-send-form",
-	"version": "0.3.20",
+	"version": "0.3.21",
 	"description": "NodeRed node for posting multipart/form-data to http server",
 	"main": "http-send-multipart-form.js",
 	"homepage": "https://github.com/anbucher/node-red-contrib-send-form#readme",
-	"author": [
-		{
-			"name": "StarDust",
-			"email": "dmvstar.devel@gmail.com",
-			"url": "https://github.com/dmvstar"
-		},
-		{
-			"name": "Chebotarov",
-			"email": "swiftshade@gmail.com",
-			"url": "https://github.com/ArcanePhysics"
-		},
-		{
-			"name": "ambucher",
-			"email": "npm@ambucher.com",
-			"url": "https://github.com/anbucher"
-		}		
-	],
+	"author": 
+	{
+		"name": "ambucher",
+		"email": "npm@ambucher.com",
+		"url": "https://github.com/anbucher"
+	},
 	"scripts": {},
 	"bugs": {
 		"url": "https://github.com/anbucher/node-red-contrib-send-form/issues"
