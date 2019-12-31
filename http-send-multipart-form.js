@@ -218,6 +218,16 @@ module.exports = function (RED) {
 									break
 								}
 								case 'obj': {
+
+									// check content-type
+									switch(res.headers["content-type"]) {
+										case 'application/json':
+										case 'application/json; charset=utf-8': {
+											body = JSON.parse(body)
+											break
+										}
+									}
+
 									msg.payload = {
 										body: body,
 										headers: res.headers,
