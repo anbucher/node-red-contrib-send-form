@@ -3,7 +3,7 @@ var mustache = require('mustache'),
 request = require('request'),
 formData = require('form-data'),
 fs = require('fs');
-const fileType = require('file-type');
+const FileType = require('file-type');
 // require in libs
 
 var fileData = ""; // initializing file
@@ -136,11 +136,11 @@ module.exports = function (RED) {
 						buffer = msg.payload.file.data;
 				}
 				
-				var fileTypeInfo = fileType(buffer);
+				var fileTypeInfo = FileType.fromBuffer(buffer);
 				fileMime = fileTypeInfo.mime;
 				fileName += "."+fileTypeInfo.ext;
 
-				if(debug) console.log(fileType(buffer));
+				if(debug) console.log(FileType.fromBuffer(buffer));
 				if(debug) console.log(url);
 
 				if(msg.payload.formOptions !== undefined) {

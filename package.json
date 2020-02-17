@@ -1,40 +1,38 @@
 {
-	"name": "@ambucher/node-red-contrib-send-form",
-	"version": "0.3.22",
-	"description": "NodeRed node for posting multipart/form-data to http server",
-	"main": "http-send-multipart-form.js",
-	"homepage": "https://github.com/anbucher/node-red-contrib-send-form#readme",
-	"author": 
-	{
-		"name": "ambucher",
-		"email": "npm@ambucher.com",
-		"url": "https://github.com/anbucher"
-	},
-	"scripts": {},
-	"bugs": {
-		"url": "https://github.com/anbucher/node-red-contrib-send-form/issues"
-	},
-	"dependencies": {
-		"file-type": ">=12.4.0",
-		"form-data": ">=3.0.0",
-		"mustache": ">=2.3.0",
-		"request": ">=2.86.0"
-	},
-	"deprecated": false,
-	"keywords": [
-		"node-red",
-		"multipart",
-		"form-data",
-		"http"
-	],
-	"license": "MIT",
-	"node-red": {
-		"nodes": {
-			"http-send-multipart-form": "http-send-multipart-form.js"
-		}
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/anbucher/node-red-contrib-send-form.git"
-	}
+  "name": "@tclayson/node-red-contrib-send-form",
+  "version": "0.0.1",
+  "description": "NodeRed node for posting multipart/form-data to http server",
+  "main": "http-send-multipart-form.js",
+  "homepage": "https://github.com/tclayson/node-red-contrib-send-form#readme",
+  "author": {
+    "name": "tclayson",
+    "url": "https://github.com/tclayson"
+  },
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/tclayson/node-red-contrib-send-form/issues"
+  },
+  "dependencies": {
+    "file-type": ">=12.4.0",
+    "form-data": ">=3.0.0",
+    "mustache": ">=2.3.0",
+    "request": ">=2.86.0"
+  },
+  "deprecated": false,
+  "keywords": [
+    "node-red",
+    "multipart",
+    "form-data",
+    "http"
+  ],
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "http-send-multipart-form": "http-send-multipart-form.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tclayson/node-red-contrib-send-form.git"
+  }
 }
